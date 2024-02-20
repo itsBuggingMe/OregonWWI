@@ -58,7 +58,7 @@ namespace OregonWWI
             GraphicsDevice.Clear(Color.Black);
 
             int charsDrawn = 0;
-            _spriteBatch.Begin();
+            _spriteBatch.Begin();   
             Vector2 cumulativeLocation = Vector2.One * padding;
 
             currentState.Deconstruct(out var text, out var operations);
