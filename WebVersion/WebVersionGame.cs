@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace OregonWWI
 {
-    public class WebVersionGame : Game
+    public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -17,7 +17,7 @@ namespace OregonWWI
 
         private TextReader _textReader;
 
-        public WebVersionGame()
+        public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -47,11 +47,11 @@ namespace OregonWWI
 #endif
             InputHelper.TickUpdate();
 
-            if(acceptingInput)
+            if (acceptingInput)
             {
                 //TODO: input lol
                 _textReader.Update();
-                if(InputHelper.RisingEdge(Keys.Enter))
+                if (InputHelper.RisingEdge(Keys.Enter))
                 {
                     string txt = _textReader.ToString();
 
@@ -82,7 +82,7 @@ namespace OregonWWI
             GraphicsDevice.Clear(Color.Black);
 
             int charsDrawn = 0;
-            _spriteBatch.Begin();   
+            _spriteBatch.Begin();
             Vector2 cumulativeLocation = Vector2.One * padding;
 
             currentState.Deconstruct(out var text, out var operations);
@@ -119,7 +119,7 @@ namespace OregonWWI
                 charsDrawn += str.Length;
             }
 
-            if(acceptingInput)
+            if (acceptingInput)
             {
                 _spriteBatch.DrawString(font, _textReader.ToString() + (totalTicks % 40 > 20 ? "_" : ""), cumulativeLocation + Vector2.UnitY * padding, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             }

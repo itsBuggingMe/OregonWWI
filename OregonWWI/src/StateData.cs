@@ -14,5 +14,5 @@ namespace OregonWWI
         public static implicit operator CString(string @this) => new CString(Color.White, @this);
         public int Length => String.Length;
     }
-    internal record class Operation(CString OptionPrint, States NextState);
+    internal record class Operation(CString OptionPrint, States NextState, params Action[] OnUsed);
 }
