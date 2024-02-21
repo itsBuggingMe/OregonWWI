@@ -417,8 +417,10 @@ namespace OregonWWI
             var arr = new CString[] {
                     "Other Survivors, just like you:"
                 }.ToList();
-
-            arr.AddRange(str.Select(c => (CString)c));
+            if(str != null)
+            {
+                arr.AddRange(str?.Select(c => (CString)c));
+            }
 
             Info.CustomState = new StateData(
                 arr.ToArray(),
