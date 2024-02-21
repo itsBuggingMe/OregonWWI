@@ -6,8 +6,12 @@ using System.Linq;
 
 namespace OregonWWI
 {
-    public class Game1 : Game
+    public class GameRoot : Game
     {
+        public static GraphicsDevice Device { get; private set; }
+        public static SpriteBatch Batch { get; private set; }
+        public static SpriteFont Font { get; private set; }
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private FiniteStateAI<States> FiniteStateAI = new();
@@ -17,11 +21,12 @@ namespace OregonWWI
 
         private TextReader _textReader;
 
-        public Game1()
+        public GameRoot()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Device = _graphics.GraphicsDevice;
         }
 
         protected override void Initialize()
@@ -29,7 +34,9 @@ namespace OregonWWI
             GameLogic.Initalize(FiniteStateAI);
             base.Initialize();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Batch = _spriteBatch;
             font = Content.Load<SpriteFont>("font");
+            Font = font;
             currentState = FiniteStateAI.Update(States.ChooseCharacter);
             _textReader = new TextReader(8);
         }

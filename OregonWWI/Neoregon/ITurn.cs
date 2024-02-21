@@ -11,6 +11,6 @@ namespace OregonWWI.Neoregon
     internal interface ITurn
     {
         public ITurn? GetNext(string userInput);
-        public void Draw(SpriteBatch spriteBatch, int totalCharactersDrawn);
+        public void Draw(int totalCharactersDrawn);
     }
 }
