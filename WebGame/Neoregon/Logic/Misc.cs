@@ -19,9 +19,6 @@ namespace OregonWWI.Neoregon.Logic
         public static int KillCount;
         public static string Title;
 
-        public static string[] Others;
-
-
         public static void Reset()
         {
             KillCount = 0;
@@ -29,7 +26,6 @@ namespace OregonWWI.Neoregon.Logic
             TurnsSurvived = 0;
             SurvivalOnAttack = new Prob(0.5f);
             SurvivalOnDefence = new Prob(0.5f);
-            ApiGetter.GetObject<string[]>("https://highscores.neonrogue.net/map/wwi", s => Others = s, () => { });
         }
     }
 
@@ -56,13 +52,13 @@ namespace OregonWWI.Neoregon.Logic
 
         static GenericTextTurn GetF1()
         {
-            Campaign c = new Campaign("Battle of Verdun", "German", null);
+            Campaign c = new Campaign("Battle of Verdun", "German", End);
             c.SetEvents(c.GetEnemyAttack, c.GetGasAttack, c.FrenchEndVaux);
             return c.CampaignGetNext();
         }
         static GenericTextTurn GetF2()
         {
-            Campaign c = new Campaign("Battle of Verdun", "German", null);
+            Campaign c = new Campaign("Battle of Verdun", "German", End);
             if(new Prob(0.5f))
                 c.SetEvents(c.GetGasAttack, c.FrenchEndDouaumont);
             else
@@ -82,14 +78,14 @@ namespace OregonWWI.Neoregon.Logic
 
         static GenericTextTurn GetCampaignUS(string cname, string oppname)
         {
-            Campaign c = new Campaign(cname, oppname, null);
+            Campaign c = new Campaign(cname, oppname, End);
             c.SetEvents(c.GetCharge, c.GetBombard, c.GetEnemyAttack, c.GetGasAttack);
             return c.CampaignGetNext();
         }
 
         static GenericTextTurn GetCampaignGerman(string cname, string oppname)
         {//TODO: add mines
-            Campaign c = new Campaign(cname, oppname, null);
+            Campaign c = new Campaign(cname, oppname, End);
             if(new Prob(0.8f))
                 c.SetEvents(c.GetEnemyAttack, c.GetBombard, c.GetEnemyAttack, c.GetBombard);
             else
@@ -119,21 +115,7 @@ namespace OregonWWI.Neoregon.Logic
                 new(() => Start, (Checker)'1', "[1] Restart"),
             });
 
-        public static GenericTextTurn End => new(
-            Concatenate(new CString[] { "Congratulations! You survived WWI", "Others who have also survived include: " }, get(), new CString[] { "======================", "Type your name here to join: ", }).ToArray(),
-            new Option[] {
-                new(() => Start, new AnyChecker(s => !string.IsNullOrWhiteSpace(s), s => ApiGetter.PostGenericString($"{s} as a {Info.Title} with {Info.KillCount} kills", "wwi")), "You will return back to start once you enter your name."),
-            });
-
-        static IEnumerable<CString> get()
-        {
-            return (IEnumerable<CString>)(Info.Others == null ? new CString[0] : Info.Others.Select(s => new CString(s, Color.White)));
-        }
-
-        public static IEnumerable<T> Concatenate<T>(params IEnumerable<T>[] lists)
-        {
-            return lists.SelectMany(x => x);
-        }
+        public static GenericTextTurn End;
     }
 
     internal class ShopStage
@@ -399,7 +381,7 @@ namespace OregonWWI.Neoregon.Logic
         {
             if (Events.Length == index)
             {
-                return end ?? Misc.End;
+                return end;
             }
             return Events[index++]();
         }

@@ -24,7 +24,7 @@ namespace WebGame.Pages
             // init game
             if (_game == null)
             {
-                _game = new OregonWWI.WebGameGame();
+                _game = new OregonWWI.GameRoot();
                 _game.Run();
             }
 

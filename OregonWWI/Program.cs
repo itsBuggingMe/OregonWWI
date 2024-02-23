@@ -1,3 +1,2 @@
-﻿
-using var game = new OregonWWI.Game1();
+﻿using var game = new OregonWWI.GameRoot();
 game.Run();

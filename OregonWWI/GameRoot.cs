@@ -5,6 +5,8 @@ using OregonWWI.Neoregon;
 using OregonWWI.Neoregon.Logic;
 using System;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace OregonWWI
 {
@@ -43,6 +45,7 @@ namespace OregonWWI
             //currentState = FiniteStateAI.Update(States.ChooseCharacter);
             _textReader = new TextReader(8);
             Current = Misc.Start;
+
         }
         protected override void Update(GameTime gameTime)
         {

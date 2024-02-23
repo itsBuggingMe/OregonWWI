@@ -22,6 +22,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Animation.cs" />
+    <Compile Include="Neoregon\CString.cs" />
+    <Compile Include="Neoregon\GenericTextTurn.cs" />
+    <Compile Include="Neoregon\ITurn.cs" />
+    <Compile Include="Neoregon\Logic\Misc.cs" />
+    <Compile Include="Neoregon\Option.cs" />
     <Compile Include="Pages\Index.razor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="src\Data.cs" />

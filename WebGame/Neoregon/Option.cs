@@ -8,27 +8,6 @@ namespace OregonWWI.Neoregon
 {
     internal record class Option(Func<ITurn> GetNext, IChecker Checker, CString Name, Action OnUsed = null);
 
-    internal class AnyChecker : IChecker
-    {
-        private Func<string, bool> _Check;
-        private Action<string> Used;
-        public AnyChecker(Func<string, bool> Check, Action<string> onSucsess)
-        { 
-            this._Check = Check;
-            Used = onSucsess;
-        }
-
-        public bool Check(string input)
-        {
-            if(_Check(input))
-            {
-                Used(input);
-                return true;
-            }
-            return false;
-        }
-    }
-
     internal class Checker : IChecker
     {
         public static Checker Get(char input)
